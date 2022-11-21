@@ -11,14 +11,10 @@ import (
 )
 
 type Environment struct {
-	Host       string `envconfig:"REST_HOST" default:"0.0.0.0"`
-	Port       string `envconfig:"REST_PORT" default:"8080"`
-	PrivateKey string `envconfig:"PRIVATE_KEY" required:"true"`
-	HostDB     string `envconfig:"HOST_DB" required:"true"`
-	PortDB     string `envconfig:"PORT_DB" required:"true"`
-	Database   string `envconfig:"DATABASE" required:"true"`
-	UserDB     string `envconfig:"USER_DB" required:"true"`
-	PasswordDB string `envconfig:"PASSWORD_DB" required:"true"`
+	Host        string `envconfig:"REST_HOST" default:"0.0.0.0"`
+	Port        string `envconfig:"REST_PORT" default:"8080"`
+	PrivateKey  string `envconfig:"PRIVATE_KEY" required:"true"`
+	PostgresDSN string `envconfig:"POSTGRES_DSN" required:"true"`
 }
 
 func ReadEnvironment() (*Environment, error) {
@@ -37,7 +33,7 @@ func (env *Environment) Addr() string {
 func (env *Environment) MakeRSAPrivateKey() (*rsa.PrivateKey, error) {
 	data, err := base64.StdEncoding.DecodeString(env.PrivateKey)
 	if err != nil {
-		return nil, fmt.Errorf("config: failed to decode public key: %s", err)
+		return nil, fmt.Errorf("config: failed to decode private key: %s", err)
 	}
 
 	return jwt.ParseRSAPrivateKeyFromPEM(data)

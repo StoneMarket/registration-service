@@ -2,15 +2,17 @@ package main
 
 import (
 	"log"
-	"strconv"
 
 	"github.com/StoneMarket/registration-service/config"
 	"github.com/StoneMarket/registration-service/internal/api"
-	"github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	if err := godotenv.Load(); err != nil {
+		log.Fatal(err)
+	}
 	run()
 }
 
@@ -19,22 +21,12 @@ func run() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Print(env)
 
-	port, err := strconv.Atoi(env.PortDB)
+	httpCfg, err := pgx.ParseConfig(env.PostgresDSN)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	cfg := pgconn.Config{
-		Host:     env.Host,
-		Port:     uint16(port),
-		Database: env.Database,
-		User:     env.UserDB,
-		Password: env.PasswordDB,
-	}
-
-	httpCfg := new(pgx.ConnConfig)
-	httpCfg.Config = cfg
 
 	if err := api.Run(env, httpCfg); err != nil {
 		log.Fatal(err)
