@@ -11,10 +11,14 @@ import (
 )
 
 type Environment struct {
-	Host        string `envconfig:"REST_HOST" default:"0.0.0.0"`
-	Port        string `envconfig:"REST_PORT" default:"8080"`
-	PrivateKey  string `envconfig:"PRIVATE_KEY" required:"true"`
-	PostgresDSN string `envconfig:"POSTGRES_DSN" required:"true"`
+	Host       string `envconfig:"REST_HOST" default:"0.0.0.0"`
+	Port       string `envconfig:"REST_PORT" default:"8080"`
+	PrivateKey string `envconfig:"PRIVATE_KEY" required:"true"`
+	HostDB     string `envconfig:"HOST_DB" required:"true"`
+	PortDB     string `envconfig:"PORT_DB" required:"true"`
+	Database   string `envconfig:"DATABASE" required:"true"`
+	UserDB     string `envconfig:"USER_DB" required:"true"`
+	PasswordDB string `envconfig:"PASSWORD_DB" required:"true"`
 }
 
 func ReadEnvironment() (*Environment, error) {

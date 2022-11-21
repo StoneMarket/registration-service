@@ -15,6 +15,12 @@ type V1 struct {
 	c *Controller
 }
 
+func NewV1(c *Controller) *V1 {
+	return &V1{
+		c: c,
+	}
+}
+
 func (v1 *V1) RestV1(ctx *fasthttp.RequestCtx) {
 	switch string(ctx.Path()) {
 	case "api/v1/user/create":
