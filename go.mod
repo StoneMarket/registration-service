@@ -6,7 +6,7 @@ require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/jackc/pgx/v4 v4.17.2
 	github.com/kelseyhightower/envconfig v1.4.0
-	github.com/valyala/fasthttp v1.41.0
+	github.com/valyala/fasthttp v1.44.0
 	go.uber.org/zap v1.13.0
 )
 
